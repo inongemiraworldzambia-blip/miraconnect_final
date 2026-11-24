@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MiraConnect.co.zm - Verified Service Providers</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,Arial;background:#0f0f0f;color:#fff}
+header{background:#111;padding:18px 14px;text-align:center;border-bottom:3px solid #d4af37}
+header h1{margin:0;font-size:28px}header h1 span{color:#d4af37}
+.sub{color:#ccc;font-size:13px;margin-top:4px}
+.banner{background:#d4af37;color:#111;font-weight:800;padding:10px;text-align:center;font-size:14px}
+.tabs{display:flex;gap:8px;padding:12px;justify-content:center;flex-wrap:wrap}
+.tabs button{padding:12px 18px;border-radius:999px;border:1px solid #d4af37;background:#1a1a1a;color:#fff;font-weight:700;cursor:pointer}
+.tabs button.active{background:#d4af37;color:#111}
+.wrap{max-width:900px;margin:0 auto;padding:0 12px 40px}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:10px 0}
+.stat{background:#1c1c1c;border:1px solid #333;border-radius:14px;padding:12px;text-align:center}
+.stat b{font-size:22px;color:#d4af37;display:block}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+select,input,textarea{width:100%;padding:12px;border-radius:10px;border:1px solid #444;background:#1c1c1c;color:#fff;margin:6px 0}
+.card{background:#1c1c1c;border:1px solid #333;border-radius:16px;padding:16px;margin:12px 0}
+.card.live{border-color:#2ecc71}.card.pending{border-color:#e67e22;border-style:dashed}
+.badge{display:inline-block;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:800}
+.verified{background:#2ecc71;color:#111}.pendingB{background:#e67e22;color:#fff}.company{background:#d4af37;color:#111}
+h2{margin:8px 0 4px}.meta{color:#bbb;font-size:13px}.desc{line-height:1.5;font-size:14px}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.btn{flex:1;text-align:center;padding:12px;border-radius:999px;font-weight:800;text-decoration:none;min-width:140px}
+.wa{background:#25D366;color:#fff}.call{background:#fff;color:#111}
+.adminBtn{padding:10px 14px;border-radius:999px;border:0;font-weight:800;cursor:pointer}
+.green{background:#2ecc71}.gold{background:#d4af37}.grey{background:#444;color:#fff}.red{background:#e74c3c;color:#fff}
+.small{font-size:12px;color:#aaa}
+.hero{background:linear-gradient(180deg,#2a2100,#111);border:2px solid #d4af37;border-radius:18px;padding:18px;text-align:center}
+label{font-size:13px;color:#ccc}
+</style></head><body>
+<header><h1>Mira<span>Connect</span>.co.zm</h1><div class="sub">Solwezi | Kalumbila | Lumwana — Your Source of Verified Service Providers — Where every job is a miracle</div><div class="sub">Admin: 0971223035 | Verified Providers Hotline</div></header>
+<div class="banner">LAUNCH SPECIAL: K100/YEAR Individuals • K900/YEAR Companies — 100% VERIFIED</div>
+<div class="tabs"><button id="tClient" class="active" onclick="show('client')">Client Portal</button><button id="tAdmin" onclick="show('admin')">Admin Dashboard</button><button id="tApply" onclick="show('apply')">Apply</button></div>
+<div class="wrap">
+<div id="viewClient">
+<div class="hero"><div class="badge company">VERIFIED COMPANY • HERO SPOTLIGHT</div><h2>⚡ IGNITION CONTRACTORS ⚡</h2><p>Solwezi's Power, Cooling & Electrical Experts | 24/7 Emergency Service<br>Generator Hire • AC Installation • Electrical Wiring • Solar Systems • Mines Approved</p><div class="btns"><a class="btn wa" href="https://wa.me/260966844995">WhatsApp Ignition — Get Quote</a><a class="btn call" href="tel:+260966844995">Call Now</a></div><p class="small">K900 Verified Company • Trust 92 • First Spotlight Advertiser</p></div>
+<div class="filters"><select id="fCat" onchange="render()"><option value="">All Categories</option><option>Electrical</option><option>Plumbing</option><option>Welding</option><option>Carpentry</option><option>Baking & Cakes</option><option>Photography</option><option>Lodge & Events</option><option>Aluminium Works</option><option>Industrial</option></select><select id="fLoc" onchange="render()"><option value="">All Locations</option><option>Solwezi</option><option>Lumwana</option><option>Kalumbila</option><option>Kimasala, Solwezi</option><option>Solwezi town</option><option>Urban Extension, Solwezi</option></select></div>
+<input id="fSearch" placeholder="Search name, skill..." oninput="render()">
+<div id="list"></div>
+</div>
+<div id="viewAdmin" style="display:none">
+<h2>Admin Dashboard</h2><p class="small">Deploy once to Vercel. After that, all updates happen HERE — no index.html replacement needed. Client Portal reads the same data.</p>
+<div class="stats"><div class="stat"><b id="sLive">-</b>LIVE Providers</div><div class="stat"><b id="sPend">-</b>Pending</div><div class="stat"><b id="sRev">-</b>Revenue Paid Only</div></div>
+<div id="adminList"></div>
+<button class="adminBtn grey" onclick="resetData()">Reset to Original 6 LIVE + 2 Pending</button>
+</div>
+<div id="viewApply" style="display:none">
+<h2>Apply to Join MiraConnect</h2><p class="small">Fill this form. It goes to Admin as PENDING for approval.</p>
+<label>Business / Full Name</label><input id="aName" placeholder="e.g. Bushfire Ranch">
+<label>Phone (WhatsApp)</label><input id="aPhone" placeholder="097...">
+<label>Category</label><select id="aCat"><option>Electrical</option><option>Plumbing</option><option>Welding</option><option>Carpentry</option><option>Baking & Cakes</option><option>Photography</option><option>Lodge & Events</option><option>Aluminium Works</option><option>Industrial</option><option>Other</option></select>
+<label>Location</label><select id="aLoc"><option>Solwezi</option><option>Lumwana</option><option>Kalumbila</option><option>Kimasala, Solwezi</option><option>Solwezi town</option><option>Urban Extension, Solwezi</option></select>
+<label>Type</label><select id="aType"><option>Individual / Start-up - K100</option><option>Company - K500/K900</option></select>
+<label>Description / Services</label><textarea id="aDesc" rows="4" placeholder="What do you do?"></textarea>
+<button class="adminBtn green" style="width:100%;padding:14px" onclick="applyNow()">Submit Application</button><p id="applyMsg" class="small"></p>
+</div>
+</div>
+<script>
+const DEFAULT=[
+{id:1,name:"BUSHFIRE RANCH",cat:"Lodge & Events",loc:"Solwezi",type:"Company",price:500,paid:true,live:true,phone:"0979698139",trust:"Verified",desc:"Lodge with quiet and peaceful surroundings & Events Centre — hosting schools, parties. Equestrian Centre — Professional training for horses and ponies, adults and children. All disciplines. Petting Zoo — Family friendly. 2x Verified References — Confirmed YES | Payment Verified."},
+{id:2,name:"Ignition Contractors",cat:"Industrial",loc:"Solwezi",type:"Company",price:900,paid:true,live:true,phone:"0966844995",trust:"92",desc:"Industrial & Commercial Projects. Generator Hire, AC Installation, Electrical Wiring, Solar. K900 Received 29 Sep 2026. Email: sonny@ignition.co.zm"},
+{id:3,name:"Mida Gates",cat:"Welding",loc:"Kimasala, Solwezi",type:"Individual / Start-up",price:100,paid:true,live:true,phone:"",trust:"Verified",desc:"Welding / Gate Works / Electronic Security. 15 years experience. Gate fabrication, gate automation, electrical work, welding. Owns welding machines, grinders & drills. Can read drawings. 2x Verified References — Rated 8/10."},
+{id:4,name:"Yatag Investments Ltd",cat:"Electrical",loc:"Solwezi",type:"Individual / Start-up",price:100,paid:true,live:true,phone:"",trust:"Verified",desc:"Electrical / Air-Conditioning & Refrigeration. Electrical works, AC installation & repairs, Refrigeration works. Quality work, satisfactory service. 2x Verified References."},
+{id:5,name:"Felix Sakala",cat:"Plumbing",loc:"Solwezi",type:"Individual / Start-up",price:100,paid:true,live:true,phone:"0770174863",trust:"85",desc:"Plumber + Electrical + Pump Installer. Leaks, geysers, pipes, installations. Time-Keeping 4.8/5. 2 referees YES. Delivers within agreed time frame."},
+{id:6,name:"Naomi Sweet Treats",cat:"Baking & Cakes",loc:"Lumwana",type:"Individual / Start-up",price:100,paid:true,live:true,phone:"",trust:"Verified",desc:"Verified baker in Lumwana specialising in Birthday Cakes, Kids Cakes, Celebration Cakes, Custom Themed Cakes. Beautiful custom designs."},
+{id:7,name:"Devison Phiri - Carpenter",cat:"Carpentry",loc:"Solwezi",type:"Individual / Start-up",price:0,paid:true,live:true,phone:"0971266581",trust:"92",desc:"Carpentry - 8 yrs. Farmers, Kitchen, Wardrobes, Doors. Can read drawings: YES. TOP MIRACLE. 3x Verified References."},
+{id:8,name:"Phillip Chisupa Jnr - Welder",cat:"Welding",loc:"Solwezi town",type:"Individual / Start-up",price:0,paid:true,live:true,phone:"0769909813",trust:"92",desc:"Welding - 47 jobs, 28 reviews. Gates, burglar bars, trailer repair. 8 yrs. 3 former clients rated 10/10."},
+{id:9,name:"Martin Sampa - Hype Photography",cat:"Photography",loc:"Urban Extension, Solwezi",type:"Individual / Start-up",price:100,paid:false,live:false,phone:"0967653097",trust:"75 - PENDING",desc:"Photography - Birthday shoots & Events. Facebook: Hype photography and media. Personal Vouch: 7 birthday shoots. NOT YET PAID — Awaiting K100. 2 Referees Provided."},
+{id:10,name:"Trovex Technologies",cat:"Aluminium Works",loc:"Solwezi",type:"Individual / Start-up",price:100,paid:false,live:false,phone:"09694724249",trust:"76 - PENDING",desc:"Aluminium Works - Sliding shower door specialist. Personal Vouch: Shower door repair. NOT YET PAID — Awaiting K100. Skill: Aluminium works."}
+];
+let data=JSON.parse(localStorage.getItem('miraconnect_v1')||'null')||DEFAULT;
+function save(){localStorage.setItem('miraconnect_v1',JSON.stringify(data));}
+function show(v){['client','admin','apply'].forEach(x=>document.getElementById('view'+x.charAt(0).toUpperCase()+x.slice(1)).style.display=(x===v?'block':'none'));['tClient','tAdmin','tApply'].forEach(id=>document.getElementById(id).classList.remove('active'));document.getElementById(v==='client'?'tClient':v==='admin'?'tAdmin':'tApply').classList.add('active');render();}
+function waLink(p){return 'https://wa.me/260'+p.replace(/^0/,'');}
+function card(p){
+ let badge=p.live?'<span class="badge verified">✅ VERIFIED — LIVE</span>':'<span class="badge pendingB">⏳ PENDING</span>';
+ let typeBadge=p.type==='Company'?'<span class="badge company">COMPANY</span>':'<span class="badge" style="background:#444">START-UP</span>';
+ let pay=p.paid?`✅ Payment Verified — K${p.price} Paid`:`⏳ NOT YET PAID — Awaiting K${p.price}`;
+ let btns=p.phone?`<div class="btns"><a class="btn wa" href="${waLink(p.phone)}">WhatsApp ${p.name.split(' ')[0]} Direct - ${p.phone}</a><a class="btn call" href="tel:+260${p.phone.replace(/^0/,'')}">Call</a></div>`:'<p class="small">Contact via Admin: 0971223035</p>';
+ return `<div class="card ${p.live?'live':'pending'}">${badge} ${typeBadge}<h2>${p.name}</h2><div class="meta">Category: ${p.cat} | Location: ${p.loc} | Trust ${p.trust} | ${p.type}</div><p class="desc">${p.desc}</p><p class="small">${pay} | Privacy: Referee details kept private — never published</p>${btns}</div>`;
+}
+function render(){
+ let cat=document.getElementById('fCat').value, loc=document.getElementById('fLoc').value, q=(document.getElementById('fSearch').value||'').toLowerCase();
+ let live=data.filter(p=>p.live && (!cat||p.cat===cat) && (!loc||p.loc===loc) && (p.name+' '+p.desc+' '+p.cat).toLowerCase().includes(q));
+ let pend=data.filter(p=>!p.live && (!cat||p.cat===cat) && (!loc||p.loc===loc) && (p.name+' '+p.desc+' '+p.cat).toLowerCase().includes(q));
+ document.getElementById('list').innerHTML='<h3>LIVE — '+live.length+'</h3>'+live.map(card).join('')+'<h3>PENDING — Not Yet LIVE</h3>'+pend.map(card).join('');
+ let rev=data.filter(p=>p.paid).reduce((s,p)=>s+p.price,0);
+ document.getElementById('sLive').innerText=data.filter(p=>p.live).length;
+ document.getElementById('sPend').innerText=data.filter(p=>!p.live).length;
+ document.getElementById('sRev').innerText='K'+rev.toLocaleString();
+ document.getElementById('adminList').innerHTML=data.map(p=>`<div class="card ${p.live?'live':'pending'}"><b>${p.name}</b> — ${p.type} — ${p.cat} — ${p.loc} — Phone ${p.phone||'-'} — ${p.paid?'K'+p.price+' PAID':'K'+p.price+' PENDING'} — ${p.live?'LIVE':'PENDING'}<div class="btns" style="margin-top:10px"><button class="adminBtn green" onclick="markPaid(${p.id})">Mark Paid</button><button class="adminBtn gold" onclick="approve(${p.id})">Approve / Go LIVE</button><button class="adminBtn grey" onclick="unapprove(${p.id})">Move to Pending</button><button class="adminBtn red" onclick="del(${p.id})">Delete</button></div></div>`).join('');
+}
+function markPaid(id){let p=data.find(x=>x.id===id);p.paid=true;save();render();alert(p.name+' marked as PAID. Now press Approve to make LIVE.');}
+function approve(id){let p=data.find(x=>x.id===id);p.live=true;p.paid=true;save();render();alert(p.name+' is now LIVE on Client Portal!');show('client');}
+function unapprove(id){let p=data.find(x=>x.id===id);p.live=false;save();render();}
+function del(id){if(confirm('Delete?')){data=data.filter(x=>x.id!==id);save();render();}}
+function applyNow(){let n=document.getElementById('aName').value.trim();if(!n){alert('Enter business name');return;}data.push({id:Date.now(),name:n,cat:document.getElementById('aCat').value,loc:document.getElementById('aLoc').value,type:document.getElementById('aType').value,price:document.getElementById('aType').value.includes('Company')?500:100,paid:false,live:false,phone:document.getElementById('aPhone').value,trust:'New - Pending',desc:document.getElementById('aDesc').value||'New application'});save();render();document.getElementById('applyMsg').innerText='Thank you! Your application is PENDING. Admin will verify you.';alert('Application submitted — now in Admin as PENDING');show('admin');}
+function resetData(){if(confirm('Reset?')){data=JSON.parse(JSON.stringify(DEFAULT));save();render();}}
+render();
+</script></body></html>
